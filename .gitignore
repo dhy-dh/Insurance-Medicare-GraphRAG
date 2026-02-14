@@ -21,7 +21,8 @@ build/
 *~
 
 # Claude Code
-.claude/settings.local.json
+.claude/
+!.claude.json
 
 # Environment variables
 .env
