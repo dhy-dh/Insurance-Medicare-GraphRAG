@@ -34,11 +34,17 @@
 # 1. 复制环境配置
 cp .env.example .env
 
-# 2. 启动服务 (Neo4j + Backend)
+# 2. 启动后端服务 (Neo4j + Backend)
 cd deploy
 docker compose up --build
 
-# 3. 访问
+# 3. 启动前端 (新终端)
+cd frontend
+pnpm install
+pnpm dev
+
+# 4. 访问
+# - 前端: http://localhost:5173
 # - API文档: http://localhost:8000/docs
 # - Neo4j Browser: http://localhost:7474
 ```
@@ -76,21 +82,25 @@ python load_neo4j.py --uri bolt://localhost:7687 --user neo4j --password your_pa
 
 ```
 Insurance-Medicare-GraphRAG/
-├── backend/                 # FastAPI 后端服务
+├── frontend/               # React + TypeScript 前端 (Vite)
+│   ├── src/
+│   │   ├── pages/         # 页面组件 (Login, Chat)
+│   │   ├── services/      # API 调用封装
+│   │   ├── App.tsx        # 路由配置
+│   │   └── main.tsx       # 入口文件
+│   ├── package.json
+│   ├── vite.config.ts
+│   └── README.md
+│
+├── backend/                # FastAPI 后端服务
 │   ├── app/
-│   │   ├── config.py       # 配置管理
-│   │   ├── models.py       # Pydantic 模型
-│   │   ├── main.py        # FastAPI 应用
-│   │   ├── routes.py      # API 路由
-│   │   ├── neo4j_client.py# Neo4j 客户端
-│   │   ├── entity_linker.py# 实体链接
-│   │   ├── subgraph.py    # 子图检索
-│   │   ├── rag_engine.py  # RAG 引擎
-│   │   ├── prompt_builder.py# Prompt 构建
-│   │   ├── llm_client.py  # LLM 客户端
-│   │   └── logging_utils.py# 日志工具
-│   ├── requirements.txt
-│   └── Dockerfile
+│   │   ├── Dockerfile
+│   │   ├── requirements.txt
+│   │   └── docker-compose.yml
+│   └── README.md
+│
+├── mock/                   # GraphRAG Mock 服务
+│   └── graphrag.py        # Mock 服务脚本
 │
 ├── kg/                     # 图谱构建与导入
 │   ├── scripts/
@@ -99,13 +109,8 @@ Insurance-Medicare-GraphRAG/
 │   │   └── load_neo4j.py        # 导入 Neo4j
 │   └── README.md
 │
-├── ui/                     # Streamlit 前端
-│   ├── app.py
-│   ├── requirements.txt
-│   └── README.md
-│
 ├── docs/                   # 文档
-│   ├── api_contract.md     # API 契约
+│   ├── api_contract.md    # API 契约
 │   ├── ontology.md         # 本体定义
 │   ├── data_contract.md   # 数据格式
 │   ├── acceptance.md      # 验收标准
@@ -114,14 +119,6 @@ Insurance-Medicare-GraphRAG/
 ├── deploy/                 # 部署配置
 │   ├── docker-compose.yml
 │   └── README.md
-│
-├── data/                   # 数据目录
-│   ├── processed/         # 处理后的数据
-│   │   ├── nodes.csv
-│   │   └── edges.csv
-│   ├── synonyms/          # 同义词库
-│   │   └── synonyms.json
-│   └── logs/              # 运行日志
 │
 ├── scripts/                # 脚本工具
 │   └── run_demo.py        # 批量测试

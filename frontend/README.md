@@ -44,6 +44,18 @@ frontend/
 | pnpm build | 构建生产版本 |
 | pnpm preview | 预览生产版本 |
 
+## 构建生产版本
+
+```bash
+# 构建生产版本
+pnpm build
+
+# 预览构建结果
+pnpm preview
+```
+
+构建后的静态文件位于 `dist/` 目录，可部署到任意静态资源服务器（如 Nginx、Apache 或 CDN）。
+
 ## 注意事项
 
 - 后端 API 地址: http://localhost:8000
